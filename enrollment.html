@@ -4,16 +4,32 @@
     <meta charset="UTF-8">
     <title>Enrollment Data</title>
     <style>
-        body { font-family: Arial; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; }
-        th { background: #667eea; color: white; padding: 10px; }
-        td { padding: 8px; border: 1px solid #ddd; }
+        body { font-family: Arial; margin: 20px; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
+        .nav { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        .nav a { color: #667eea; text-decoration: none; padding: 8px 15px; margin-right: 10px; border: 2px solid #667eea; border-radius: 5px; }
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th { background: #667eea; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; }
         tr:hover { background: #f5f5f5; }
     </style>
 </head>
 <body>
-    <h1>📊 Enrollment Data</h1>
-    <p><a href="index.html">← Back to Home</a></p>
+    <div class="header">
+        <h1>📊 Enrollment Data</h1>
+        <p>Mindanao Education Data Portal</p>
+    </div>
+    
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="enrollment.html">Enrollment</a>
+        <a href="graduates.html">Graduates</a>
+        <a href="osy.html">OSY</a>
+        <a href="poverty.html">Poverty</a>
+        <a href="infrastructure.html">Infrastructure</a>
+        <a href="incidents.html">Incidents</a>
+        <a href="performance.html">Performance</a>
+    </div>
     
     <div id="enrollment_data_table">
         <table>
@@ -22,6 +38,7 @@
                     <th>City</th>
                     <th>Year</th>
                     <th>Month</th>
+                    <th>Quarter</th>
                     <th>Total_Enrollment</th>
                     <th>Elementary</th>
                     <th>Junior_High</th>
@@ -31,15 +48,29 @@
                 </tr>
             </thead>
             <tbody>
-                <tr><td>General Santos</td><td>2015</td><td>1</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
-                <tr><td>General Santos</td><td>2015</td><td>2</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
-                <tr><td>General Santos</td><td>2015</td><td>3</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
-                <tr><td>Tacurong</td><td>2015</td><td>1</td><td>28000</td><td>13440</td><td>8960</td><td>5600</td><td>13720</td><td>14280</td></tr>
-                <tr><td>Tacurong</td><td>2015</td><td>2</td><td>28000</td><td>13440</td><td>8960</td><td>5600</td><td>13720</td><td>14280</td></tr>
-                <tr><td>Isulan</td><td>2015</td><td>1</td><td>24000</td><td>11520</td><td>7680</td><td>4800</td><td>11760</td><td>12240</td></tr>
-                <tr><td>Koronadal</td><td>2015</td><td>1</td><td>48000</td><td>23040</td><td>15360</td><td>9600</td><td>23520</td><td>24480</td></tr>
-                <tr><td>Kidapawan</td><td>2015</td><td>1</td><td>42000</td><td>20160</td><td>13440</td><td>8400</td><td>20580</td><td>21420</td></tr>
-                <!-- Add more rows as needed -->
+                <tr><td>General Santos</td><td>2015</td><td>1</td><td>Q1</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>2</td><td>Q1</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>3</td><td>Q1</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>4</td><td>Q2</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>5</td><td>Q2</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>6</td><td>Q2</td><td>203500</td><td>97680</td><td>65120</td><td>40700</td><td>99715</td><td>103785</td></tr>
+                <tr><td>General Santos</td><td>2016</td><td>1</td><td>Q1</td><td>185000</td><td>88800</td><td>59200</td><td>37000</td><td>90650</td><td>94350</td></tr>
+                <tr><td>General Santos</td><td>2016</td><td>6</td><td>Q2</td><td>203500</td><td>97680</td><td>65120</td><td>40700</td><td>99715</td><td>103785</td></tr>
+                <tr><td>General Santos</td><td>2020</td><td>1</td><td>Q1</td><td>170200</td><td>81696</td><td>54464</td><td>34040</td><td>83398</td><td>86802</td></tr>
+                <tr><td>General Santos</td><td>2020</td><td>6</td><td>Q2</td><td>187220</td><td>89866</td><td>59910</td><td>37444</td><td>91738</td><td>95482</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>1</td><td>Q1</td><td>28000</td><td>13440</td><td>8960</td><td>5600</td><td>13720</td><td>14280</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>2</td><td>Q1</td><td>28000</td><td>13440</td><td>8960</td><td>5600</td><td>13720</td><td>14280</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>6</td><td>Q2</td><td>30800</td><td>14784</td><td>9856</td><td>6160</td><td>15092</td><td>15708</td></tr>
+                <tr><td>Tacurong</td><td>2020</td><td>1</td><td>Q1</td><td>25760</td><td>12365</td><td>8243</td><td>5152</td><td>12622</td><td>13138</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>1</td><td>Q1</td><td>24000</td><td>11520</td><td>7680</td><td>4800</td><td>11760</td><td>12240</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>6</td><td>Q2</td><td>26400</td><td>12672</td><td>8448</td><td>5280</td><td>12936</td><td>13464</td></tr>
+                <tr><td>Isulan</td><td>2020</td><td>1</td><td>Q1</td><td>22080</td><td>10598</td><td>7066</td><td>4416</td><td>10819</td><td>11261</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>1</td><td>Q1</td><td>48000</td><td>23040</td><td>15360</td><td>9600</td><td>23520</td><td>24480</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>6</td><td>Q2</td><td>52800</td><td>25344</td><td>16896</td><td>10560</td><td>25872</td><td>26928</td></tr>
+                <tr><td>Koronadal</td><td>2020</td><td>1</td><td>Q1</td><td>44160</td><td>21197</td><td>14131</td><td>8832</td><td>21638</td><td>22522</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>1</td><td>Q1</td><td>42000</td><td>20160</td><td>13440</td><td>8400</td><td>20580</td><td>21420</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>6</td><td>Q2</td><td>46200</td><td>22176</td><td>14784</td><td>9240</td><td>22638</td><td>23562</td></tr>
+                <tr><td>Kidapawan</td><td>2020</td><td>1</td><td>Q1</td><td>38640</td><td>18547</td><td>12365</td><td>7728</td><td>18934</td><td>19706</td></tr>
             </tbody>
         </table>
     </div>
