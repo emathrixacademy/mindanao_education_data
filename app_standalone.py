@@ -5,7 +5,7 @@ MINDANAO EDUCATION DATA PORTAL - STANDALONE VERSION
 Complete self-contained version with embedded data generation.
 Deploy to Streamlit Cloud - No external files needed!
 
-Generates 1000+ rows per data category for comprehensive analysis.
+Generates 1000+ rows per data category with pagination (15 rows per page).
 ============================================================================
 """
 
@@ -15,6 +15,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 from datetime import datetime
+import math
 
 # ============================================================================
 # PAGE CONFIGURATION
@@ -63,7 +64,7 @@ def generate_all_data():
         noise = np.random.normal(0, noise_level * value)
         return max(0, value + noise)
     
-    # ========== ENROLLMENT DATA (1000+ rows) ==========
+    # ========== ENROLLMENT DATA (600+ rows) ==========
     enrollment_data = []
     for city, config in CITIES.items():
         base = config['base_enrollment']
@@ -136,7 +137,7 @@ def generate_all_data():
                         'Average_Grade': round(np.random.uniform(82, 94), 2)
                     })
     
-    # ========== OSY DATA (1000+ rows) ==========
+    # ========== OSY DATA (1400+ rows) ==========
     osy_data = []
     for city, config in CITIES.items():
         base_osy = int(config['population'] * 0.03 * (1 + config['poverty_rate']))
@@ -178,7 +179,7 @@ def generate_all_data():
                         'Gender_Female': total_osy - int(total_osy * np.random.uniform(0.45, 0.55))
                     })
     
-    # ========== POVERTY DATA (1000+ rows) ==========
+    # ========== POVERTY DATA (1150+ rows) ==========
     poverty_data = []
     for city, config in CITIES.items():
         total_students = config['base_enrollment']
@@ -204,7 +205,7 @@ def generate_all_data():
                     'Poverty_Rate': round(local_poverty_rate, 3)
                 })
     
-    # ========== INFRASTRUCTURE DATA (1000+ rows) ==========
+    # ========== INFRASTRUCTURE DATA (1590+ rows) ==========
     infrastructure_data = []
     for city, config in CITIES.items():
         # Generate data per school
@@ -242,7 +243,7 @@ def generate_all_data():
                     'Teacher_Student_Ratio': round(1 / np.random.uniform(25, 38), 4)
                 })
     
-    # ========== INCIDENTS DATA (1000+ rows) ==========
+    # ========== INCIDENTS DATA (4800+ rows) ==========
     incidents_data = []
     for city, config in CITIES.items():
         base_students = config['base_enrollment']
@@ -281,7 +282,7 @@ def generate_all_data():
                         'Counseling_Provided': int(count * np.random.uniform(0.40, 0.70))
                     })
     
-    # ========== PERFORMANCE DATA (1000+ rows) ==========
+    # ========== PERFORMANCE DATA (4320+ rows) ==========
     performance_data = []
     for city, config in CITIES.items():
         base_score = 75 - (config['poverty_rate'] * 30)
@@ -382,6 +383,14 @@ def local_css():
     table tr:hover {
         background-color: #f5f5f5;
     }
+    .pagination-info {
+        background-color: #f0f2f6;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 10px 0;
+        text-align: center;
+        font-weight: 600;
+    }
     </style>
     """, unsafe_allow_html=True)
 
@@ -396,10 +405,21 @@ def format_percentage(num):
     return f"{num*100:.1f}%"
 
 def display_data_table(df, table_id):
+    """Display dataframe as HTML table with ID for scraping"""
     html = f'<div id="{table_id}" class="data-table">\n'
     html += df.to_html(index=False, classes='dataframe', border=0)
     html += '</div>'
     st.markdown(html, unsafe_allow_html=True)
+
+def paginate_dataframe(df, page_size=15, page_num=1):
+    """Paginate a dataframe"""
+    total_rows = len(df)
+    total_pages = math.ceil(total_rows / page_size)
+    
+    start_idx = (page_num - 1) * page_size
+    end_idx = min(start_idx + page_size, total_rows)
+    
+    return df.iloc[start_idx:end_idx], total_pages, start_idx, end_idx, total_rows
 
 # ============================================================================
 # PAGES
@@ -420,8 +440,8 @@ def page_home(datasets):
     col1, col2, col3, col4 = st.columns(4)
     
     with col1:
-        total_enrollment = datasets['enrollment']['Total_Enrollment'].sum()
-        st.metric("Total Enrollment Records", format_number(len(datasets['enrollment'])))
+        total_enrollment = len(datasets['enrollment'])
+        st.metric("Enrollment Records", format_number(total_enrollment))
     
     with col2:
         total_schools = len(datasets['infrastructure'])
@@ -476,7 +496,7 @@ def page_city_dashboard(city, datasets):
         st.metric("Avg Score (All Years)", f"{avg_score:.1f}/100")
     
     st.markdown("---")
-    st.info(f"Showing aggregated data for {city}. Use 'All Data Tables' page to see detailed records.")
+    st.info(f"Showing aggregated data for {city}. Use 'All Data Tables' page to see detailed records with pagination.")
 
 def page_all_data(datasets):
     st.markdown('<div class="main-header">📊 Complete Data Tables</div>', unsafe_allow_html=True)
@@ -485,7 +505,7 @@ def page_all_data(datasets):
     <div style="background:#e3f2fd; padding:1rem; border-radius:8px;">
     <h3>🔍 Web Scraping Guide</h3>
     <p>All tables have unique IDs: <code>[category]_data_table</code></p>
-    <p>Each category contains 1000+ rows for comprehensive analysis!</p>
+    <p>Each category contains 1000+ rows. Use pagination to browse or download complete CSV.</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -497,27 +517,89 @@ def page_all_data(datasets):
     
     st.markdown("---")
     
+    # Initialize session state for pagination
+    if 'page_numbers' not in st.session_state:
+        st.session_state.page_numbers = {cat: 1 for cat in datasets.keys()}
+    
     for category, df in datasets.items():
         st.markdown(f'<div class="sub-header">📊 {category.upper().replace("_", " ")} DATA</div>', unsafe_allow_html=True)
         
+        # Apply filters
         df_filtered = df.copy()
         if selected_city != 'All Cities':
             df_filtered = df_filtered[df_filtered['City'] == selected_city]
         if selected_year != 'All Years':
             df_filtered = df_filtered[df_filtered['Year'] == selected_year]
         
-        st.info(f"📋 Records: {len(df_filtered)} | 📊 Columns: {len(df_filtered.columns)} | 🔖 Table ID: `{category}_data_table`")
+        # Get current page for this category
+        current_page = st.session_state.page_numbers.get(category, 1)
         
-        # Show first 100 rows in UI (full data available for scraping)
-        if len(df_filtered) > 100:
-            st.warning(f"⚠️ Showing first 100 of {len(df_filtered)} records. Download CSV or webscrape for complete data.")
-            display_data_table(df_filtered.head(100), f"{category}_data_table")
-        else:
-            display_data_table(df_filtered, f"{category}_data_table")
+        # Paginate
+        page_size = 15
+        df_page, total_pages, start_idx, end_idx, total_rows = paginate_dataframe(
+            df_filtered, page_size=page_size, page_num=current_page
+        )
         
+        # Display info
+        st.info(f"📋 Total Records: **{total_rows}** | 📊 Columns: **{len(df_filtered.columns)}** | 🔖 Table ID: `{category}_data_table`")
+        
+        # Pagination info
+        st.markdown(f"""
+        <div class="pagination-info">
+        Showing rows {start_idx + 1} to {end_idx} of {total_rows} | Page {current_page} of {total_pages}
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Display table (paginated)
+        display_data_table(df_page, f"{category}_data_table")
+        
+        # Pagination controls
+        col1, col2, col3, col4, col5 = st.columns([1, 1, 2, 1, 1])
+        
+        with col1:
+            if st.button("⏮️ First", key=f"first_{category}"):
+                st.session_state.page_numbers[category] = 1
+                st.rerun()
+        
+        with col2:
+            if st.button("◀️ Prev", key=f"prev_{category}", disabled=(current_page == 1)):
+                st.session_state.page_numbers[category] = max(1, current_page - 1)
+                st.rerun()
+        
+        with col3:
+            # Page number input
+            new_page = st.number_input(
+                f"Go to page (1-{total_pages}):",
+                min_value=1,
+                max_value=total_pages,
+                value=current_page,
+                key=f"page_input_{category}",
+                label_visibility="collapsed"
+            )
+            if new_page != current_page:
+                st.session_state.page_numbers[category] = new_page
+                st.rerun()
+        
+        with col4:
+            if st.button("Next ▶️", key=f"next_{category}", disabled=(current_page == total_pages)):
+                st.session_state.page_numbers[category] = min(total_pages, current_page + 1)
+                st.rerun()
+        
+        with col5:
+            if st.button("Last ⏭️", key=f"last_{category}"):
+                st.session_state.page_numbers[category] = total_pages
+                st.rerun()
+        
+        # Download button (full dataset)
         csv = df_filtered.to_csv(index=False)
-        st.download_button(f"💾 Download {category.upper()} ({len(df_filtered)} records)", 
-                          csv, f"{category}_data.csv", "text/csv", key=f"dl_{category}")
+        st.download_button(
+            f"💾 Download Complete {category.upper()} Dataset ({total_rows} records)", 
+            csv, 
+            f"{category}_data.csv", 
+            "text/csv", 
+            key=f"dl_{category}"
+        )
+        
         st.markdown("---")
 
 # ============================================================================
@@ -528,7 +610,7 @@ def main():
     local_css()
     
     # Generate all data (cached - only runs once)
-    with st.spinner("🔄 Generating 7000+ education records..."):
+    with st.spinner("🔄 Generating 14,000+ education records..."):
         datasets = generate_all_data()
     
     cities = list(datasets['enrollment']['City'].unique())
@@ -557,7 +639,7 @@ def main():
         🏙️ 5 Cities  
         📊 7 Categories  
         📅 2015-2024 (10 years)  
-        📈 1000+ rows per category
+        📄 15 rows per page
         """)
     
     if page == "🏠 Home":
