@@ -2,24 +2,14 @@
 ============================================================================
 MINDANAO EDUCATION DATA PORTAL - WEB SCRAPING VERSION
 ============================================================================
-Version for teaching web scraping:
-- NO download buttons
-- NO pagination
-- ALL data displayed in full tables
-- Perfect for rvest scraping in R
+All data tables load immediately on home page for easy scraping
 ============================================================================
 """
 
 import streamlit as st
 import pandas as pd
 import numpy as np
-import plotly.express as px
-import plotly.graph_objects as go
 from datetime import datetime
-
-# ============================================================================
-# PAGE CONFIGURATION
-# ============================================================================
 
 st.set_page_config(
     page_title="Mindanao Education Data Portal",
@@ -29,7 +19,7 @@ st.set_page_config(
 )
 
 # ============================================================================
-# EMBEDDED DATA GENERATION (1000+ ROWS PER CATEGORY)
+# DATA GENERATION (same as before)
 # ============================================================================
 
 @st.cache_data
@@ -38,7 +28,6 @@ def generate_all_data():
     
     np.random.seed(42)
     
-    # City configurations
     CITIES = {
         'General Santos': {'population': 697315, 'schools_public': 245, 'schools_private': 89, 
                           'base_enrollment': 185000, 'poverty_rate': 0.24},
@@ -52,19 +41,18 @@ def generate_all_data():
                      'base_enrollment': 42000, 'poverty_rate': 0.28}
     }
     
-    YEARS = list(range(2015, 2025))  # 10 years: 2015-2024
-    MONTHS = list(range(1, 13))  # 12 months
+    YEARS = list(range(2015, 2025))
+    MONTHS = list(range(1, 13))
     QUARTERS = ['Q1', 'Q2', 'Q3', 'Q4']
     SCHOOL_TYPES = ['Public', 'Private']
     GRADE_LEVELS = ['Grade 1', 'Grade 2', 'Grade 3', 'Grade 4', 'Grade 5', 'Grade 6',
-                    'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10',
-                    'Grade 11', 'Grade 12']
+                    'Grade 7', 'Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12']
     
     def add_noise(value, noise_level=0.05):
         noise = np.random.normal(0, noise_level * value)
         return max(0, value + noise)
     
-    # ========== ENROLLMENT DATA (600+ rows) ==========
+    # ENROLLMENT DATA
     enrollment_data = []
     for city, config in CITIES.items():
         base = config['base_enrollment']
@@ -87,9 +75,7 @@ def generate_all_data():
                 total = int(add_noise(base * factor * month_factor, 0.03))
                 
                 enrollment_data.append({
-                    'City': city,
-                    'Year': year,
-                    'Month': month,
+                    'City': city, 'Year': year, 'Month': month,
                     'Quarter': QUARTERS[(month-1)//3],
                     'Total_Enrollment': total,
                     'Elementary': int(total * 0.48),
@@ -102,7 +88,7 @@ def generate_all_data():
                     'Enrollment_Rate': round(np.random.uniform(0.89, 0.97), 3)
                 })
     
-    # ========== GRADUATE DATA (1000+ rows) ==========
+    # GRADUATE DATA
     graduates_data = []
     for city, config in CITIES.items():
         base_graduates = int(config['base_enrollment'] * 0.08)
@@ -119,9 +105,7 @@ def generate_all_data():
                     actual = int(total * track_dist[track] * type_factor * grad_rate)
                     
                     graduates_data.append({
-                        'City': city,
-                        'Year': year,
-                        'Track': track,
+                        'City': city, 'Year': year, 'Track': track,
                         'School_Type': school_type,
                         'Total_Graduates': actual,
                         'Graduation_Rate': round(grad_rate + np.random.uniform(-0.05, 0.05), 3),
@@ -132,7 +116,7 @@ def generate_all_data():
                         'Average_Grade': round(np.random.uniform(82, 94), 2)
                     })
     
-    # ========== OSY DATA (1400+ rows) ==========
+    # OSY DATA
     osy_data = []
     for city, config in CITIES.items():
         base_osy = int(config['population'] * 0.03 * (1 + config['poverty_rate']))
@@ -152,7 +136,6 @@ def generate_all_data():
             
             age_groups = ['6-11', '12-15', '16-18', '19-24']
             age_dist = {'6-11': 0.15, '12-15': 0.28, '16-18': 0.35, '19-24': 0.22}
-            
             reasons = ['Financial', 'Family_Obligations', 'Distance', 'Lack_Interest', 'Health', 'Marriage', 'Work']
             reason_dist = {'Financial': 0.35, 'Family_Obligations': 0.20, 'Distance': 0.12, 
                           'Lack_Interest': 0.15, 'Health': 0.08, 'Marriage': 0.05, 'Work': 0.05}
@@ -162,10 +145,8 @@ def generate_all_data():
                     total_osy = int(add_noise(base_osy * factor * age_dist[age_group] * reason_dist[reason], 0.08))
                     
                     osy_data.append({
-                        'City': city,
-                        'Year': year,
-                        'Age_Group': age_group,
-                        'Reason': reason,
+                        'City': city, 'Year': year,
+                        'Age_Group': age_group, 'Reason': reason,
                         'Total_OSY': total_osy,
                         'ALS_Enrolled': int(total_osy * np.random.uniform(0.15, 0.30)),
                         'Returned_to_School': int(total_osy * np.random.uniform(0.05, 0.12)),
@@ -173,7 +154,7 @@ def generate_all_data():
                         'Gender_Female': total_osy - int(total_osy * np.random.uniform(0.45, 0.55))
                     })
     
-    # ========== POVERTY DATA (1150+ rows) ==========
+    # POVERTY DATA
     poverty_data = []
     for city, config in CITIES.items():
         total_students = config['base_enrollment']
@@ -187,8 +168,7 @@ def generate_all_data():
                 local_poverty_rate = max(0.05, min(0.60, config['poverty_rate'] + poverty_variance))
                 
                 poverty_data.append({
-                    'City': city,
-                    'Year': year,
+                    'City': city, 'Year': year,
                     'Barangay': f'Barangay {barangay_num}',
                     'Total_Students': barangay_students,
                     'FourPs_Beneficiaries': int(barangay_students * local_poverty_rate * 0.85),
@@ -198,7 +178,7 @@ def generate_all_data():
                     'Poverty_Rate': round(local_poverty_rate, 3)
                 })
     
-    # ========== INFRASTRUCTURE DATA (1590+ rows) ==========
+    # INFRASTRUCTURE DATA
     infrastructure_data = []
     for city, config in CITIES.items():
         total_schools = config['schools_public'] + config['schools_private']
@@ -216,8 +196,7 @@ def generate_all_data():
                     base_students = {'Small': 150, 'Medium': 300, 'Large': 600}[school_size]
                 
                 infrastructure_data.append({
-                    'City': city,
-                    'Year': year,
+                    'City': city, 'Year': year,
                     'School_ID': f'{city[:3].upper()}-{school_num:03d}',
                     'School_Type': school_type,
                     'School_Size': school_size,
@@ -234,7 +213,7 @@ def generate_all_data():
                     'Teacher_Student_Ratio': round(1 / np.random.uniform(25, 38), 4)
                 })
     
-    # ========== INCIDENTS DATA (4800+ rows) ==========
+    # INCIDENTS DATA
     incidents_data = []
     for city, config in CITIES.items():
         base_students = config['base_enrollment']
@@ -258,9 +237,7 @@ def generate_all_data():
                     count = int(base_students * type_rates[incident_type] * factor * month_factor / 12)
                     
                     incidents_data.append({
-                        'City': city,
-                        'Year': year,
-                        'Month': month,
+                        'City': city, 'Year': year, 'Month': month,
                         'Incident_Type': incident_type,
                         'Incident_Count': count,
                         'Resolved': int(count * np.random.uniform(0.70, 0.95)),
@@ -271,7 +248,7 @@ def generate_all_data():
                         'Counseling_Provided': int(count * np.random.uniform(0.40, 0.70))
                     })
     
-    # ========== PERFORMANCE DATA (4320+ rows) ==========
+    # PERFORMANCE DATA
     performance_data = []
     for city, config in CITIES.items():
         base_score = 75 - (config['poverty_rate'] * 30)
@@ -296,10 +273,8 @@ def generate_all_data():
                     score = max(40, min(100, score))
                     
                     performance_data.append({
-                        'City': city,
-                        'Year': year,
-                        'Grade_Level': grade,
-                        'Subject': subject,
+                        'City': city, 'Year': year,
+                        'Grade_Level': grade, 'Subject': subject,
                         'Average_Score': score,
                         'Passing_Rate': round(min(0.98, max(0.60, (score - 30) / 70)), 3),
                         'High_Performers': int(200 * ((score - 60) / 40)),
@@ -308,7 +283,6 @@ def generate_all_data():
                         'Teacher_Quality_Rating': round(np.random.uniform(3.5, 5.0), 2)
                     })
     
-    # Convert to DataFrames
     datasets = {
         'enrollment': pd.DataFrame(enrollment_data),
         'graduates': pd.DataFrame(graduates_data),
@@ -322,196 +296,71 @@ def generate_all_data():
     return datasets
 
 # ============================================================================
-# STYLING
+# DISPLAY FUNCTIONS
 # ============================================================================
 
-def local_css():
-    st.markdown("""
-    <style>
-    .main-header {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #1f77b4;
-        text-align: center;
-        padding: 1rem 0;
-        border-bottom: 3px solid #1f77b4;
-        margin-bottom: 2rem;
-    }
-    .sub-header {
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: #2c3e50;
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        border-left: 5px solid #3498db;
-        padding-left: 15px;
-    }
-    .data-table {
-        border: 2px solid #e0e0e0;
-        border-radius: 8px;
-        overflow: hidden;
-        max-height: 600px;
-        overflow-y: auto;
-    }
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-    table th {
-        background-color: #1f77b4;
-        color: white;
-        padding: 12px;
-        text-align: left;
-        font-weight: 600;
-        position: sticky;
-        top: 0;
-        z-index: 10;
-    }
-    table td {
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-    }
-    table tr:hover {
-        background-color: #f5f5f5;
-    }
-    </style>
-    """, unsafe_allow_html=True)
-
-def format_number(num):
-    if pd.isna(num):
-        return "N/A"
-    return f"{int(num):,}"
-
-def display_data_table(df, table_id):
-    """Display COMPLETE dataframe as scrollable HTML table - NO PAGINATION"""
-    html = f'<div id="{table_id}" class="data-table">\n'
-    html += df.to_html(index=False, classes='dataframe', border=0, escape=False)
-    html += '</div>'
-    st.markdown(html, unsafe_allow_html=True)
-
-# ============================================================================
-# PAGES
-# ============================================================================
-
-def page_home(datasets):
-    st.markdown('<div class="main-header">🎓 Mindanao Education Data Portal</div>', unsafe_allow_html=True)
+def display_table_for_scraping(df, table_id, category_name):
+    """Display table with proper HTML structure for scraping"""
     
-    st.markdown("""
-    <div style="background:#e3f2fd; padding:1rem; border-radius:8px; border-left:4px solid #2196f3; margin:1rem 0;">
-    <h3>📊 Welcome to the Mindanao Education Data Portal</h3>
-    <p>Comprehensive education statistics for 5 major Mindanao cities covering 2015-2024.</p>
-    <p><strong>🎓 For Web Scraping Practice:</strong> All data tables display complete datasets for scraping with R or Python!</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.markdown(f"### 📊 {category_name.upper()} DATA")
+    st.info(f"**Table ID:** `{table_id}` | **Records:** {len(df):,} | **Columns:** {len(df.columns)}")
     
-    st.markdown('<div class="sub-header">📈 Regional Overview</div>', unsafe_allow_html=True)
+    # Create HTML table with ID
+    html = f'<div id="{table_id}">\n'
+    html += '<table border="1" class="dataframe">\n<thead>\n<tr style="text-align: left;">\n'
     
-    col1, col2, col3, col4 = st.columns(4)
+    # Headers
+    for col in df.columns:
+        html += f'<th>{col}</th>\n'
+    html += '</tr>\n</thead>\n<tbody>\n'
     
-    with col1:
-        total_records = sum(len(df) for df in datasets.values())
-        st.metric("Total Records", format_number(total_records))
+    # Rows
+    for idx, row in df.iterrows():
+        html += '<tr>\n'
+        for val in row:
+            html += f'<td>{val}</td>\n'
+        html += '</tr>\n'
     
-    with col2:
-        st.metric("Categories", "7")
+    html += '</tbody>\n</table>\n</div>'
     
-    with col3:
-        st.metric("Cities", "5")
-    
-    with col4:
-        st.metric("Years", "2015-2024")
-    
+    # Display in scrollable container
+    st.markdown(f'<div style="max-height: 400px; overflow-y: auto;">{html}</div>', unsafe_allow_html=True)
     st.markdown("---")
-    
-    st.markdown('<div class="sub-header">📊 Dataset Sizes</div>', unsafe_allow_html=True)
-    
-    dataset_info = []
-    for name, df in datasets.items():
-        dataset_info.append({
-            'Category': name.upper(),
-            'Total Records': len(df),
-            'Columns': len(df.columns),
-            'Scrapable': '✅ Yes'
-        })
-    
-    info_df = pd.DataFrame(dataset_info)
-    st.dataframe(info_df, use_container_width=True, hide_index=True)
-    
-    st.markdown("---")
-    st.success("🎯 All data is displayed in full on the 'Data Tables' page for web scraping practice!")
-
-def page_all_data(datasets):
-    st.markdown('<div class="main-header">📊 Complete Data Tables</div>', unsafe_allow_html=True)
-    
-    st.markdown("""
-    <div style="background:#fff3cd; padding:1rem; border-radius:8px; border-left:4px solid #ff9800; margin:1rem 0;">
-    <h3>🎓 Web Scraping Instructions</h3>
-    <p><strong>All tables display COMPLETE datasets</strong> - perfect for web scraping practice!</p>
-    <p>Each table has a unique ID: <code>[category]_data_table</code></p>
-    <p><strong>Example:</strong> Use <code>enrollment_data_table</code> to scrape enrollment data with R (rvest) or Python (BeautifulSoup)</p>
-    </div>
-    """, unsafe_allow_html=True)
-    
-    st.markdown("---")
-    
-    for category, df in datasets.items():
-        st.markdown(f'<div class="sub-header">📊 {category.upper().replace("_", " ")} DATA</div>', unsafe_allow_html=True)
-        
-        col1, col2, col3 = st.columns(3)
-        with col1:
-            st.info(f"📋 **Total Records:** {len(df):,}")
-        with col2:
-            st.info(f"📊 **Columns:** {len(df.columns)}")
-        with col3:
-            st.info(f"🔖 **Table ID:** `{category}_data_table`")
-        
-        # Display COMPLETE table (scrollable)
-        st.markdown(f"**Displaying ALL {len(df):,} rows** (scroll to view)")
-        display_data_table(df, f"{category}_data_table")
-        
-        st.markdown("---")
 
 # ============================================================================
 # MAIN APP
 # ============================================================================
 
 def main():
-    local_css()
+    st.title("🎓 Mindanao Education Data Portal")
+    st.markdown("### Web Scraping Practice Portal")
     
-    with st.spinner("🔄 Loading education data..."):
+    st.info("""
+    **🎯 For Web Scraping Workshop**
+    
+    All data tables are displayed below with unique IDs for scraping practice.
+    
+    **Table IDs:**
+    - `enrollment_data_table`
+    - `graduates_data_table`
+    - `osy_data_table`
+    - `poverty_data_table`
+    - `infrastructure_data_table`
+    - `incidents_data_table`
+    - `performance_data_table`
+    """)
+    
+    with st.spinner("🔄 Loading data..."):
         datasets = generate_all_data()
     
-    with st.sidebar:
-        st.markdown("### 🧭 Navigation")
-        page = st.radio("Choose:", ["🏠 Home", "📊 Data Tables"], 
-                       label_visibility="collapsed")
-        
-        st.markdown("---")
-        
-        total_records = sum(len(df) for df in datasets.values())
-        st.success(f"**{format_number(total_records)}** records ready")
-        
-        st.info("""
-        **Web Scraping Portal**
-        
-        🏙️ 5 Cities  
-        📊 7 Categories  
-        📅 2015-2024  
-        🎓 Full data display
-        """)
-        
-        st.markdown("---")
-        st.markdown("### 🎯 For Students")
-        st.markdown("""
-        All data tables show **complete datasets** for web scraping practice!
-        
-        Use R (rvest) or Python (BeautifulSoup) to extract data.
-        """)
+    st.success(f"✅ Loaded {sum(len(df) for df in datasets.values()):,} total records across 7 categories")
     
-    if page == "🏠 Home":
-        page_home(datasets)
-    else:
-        page_all_data(datasets)
+    st.markdown("---")
+    
+    # Display all tables
+    for category, df in datasets.items():
+        table_id = f"{category}_data_table"
+        display_table_for_scraping(df, table_id, category)
 
 if __name__ == "__main__":
     main()
