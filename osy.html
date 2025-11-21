@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>OSY Data</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
+        .nav { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        .nav a { color: #667eea; text-decoration: none; padding: 8px 15px; margin-right: 10px; border: 2px solid #667eea; border-radius: 5px; }
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th { background: #667eea; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 Out-of-School Youth Data</h1>
+        <p>Mindanao Education Data Portal</p>
+    </div>
+    
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="enrollment.html">Enrollment</a>
+        <a href="graduates.html">Graduates</a>
+        <a href="osy.html">OSY</a>
+        <a href="poverty.html">Poverty</a>
+        <a href="infrastructure.html">Infrastructure</a>
+        <a href="incidents.html">Incidents</a>
+        <a href="performance.html">Performance</a>
+    </div>
+    
+    <div id="osy_data_table">
+        <table>
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Year</th>
+                    <th>Age_Group</th>
+                    <th>Reason</th>
+                    <th>Total_OSY</th>
+                    <th>ALS_Enrolled</th>
+                    <th>Gender_Male</th>
+                    <th>Gender_Female</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>General Santos</td><td>2015</td><td>6-11</td><td>Financial</td><td>850</td><td>213</td><td>425</td><td>425</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>6-11</td><td>Family_Obligations</td><td>480</td><td>120</td><td>240</td><td>240</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>6-11</td><td>Distance</td><td>290</td><td>73</td><td>145</td><td>145</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>6-11</td><td>Lack_Interest</td><td>360</td><td>90</td><td>180</td><td>180</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>12-15</td><td>Financial</td><td>1590</td><td>398</td><td>795</td><td>795</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>12-15</td><td>Family_Obligations</td><td>900</td><td>225</td><td>450</td><td>450</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>12-15</td><td>Distance</td><td>540</td><td>135</td><td>270</td><td>270</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>12-15</td><td>Lack_Interest</td><td>680</td><td>170</td><td>340</td><td>340</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>16-18</td><td>Financial</td><td>1990</td><td>498</td><td>995</td><td>995</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>16-18</td><td>Family_Obligations</td><td>1130</td><td>283</td><td>565</td><td>565</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>16-18</td><td>Distance</td><td>680</td><td>170</td><td>340</td><td>340</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>16-18</td><td>Lack_Interest</td><td>850</td><td>213</td><td>425</td><td>425</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>19-24</td><td>Financial</td><td>1250</td><td>313</td><td>625</td><td>625</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>19-24</td><td>Family_Obligations</td><td>710</td><td>178</td><td>355</td><td>355</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>19-24</td><td>Distance</td><td>425</td><td>106</td><td>213</td><td>212</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>19-24</td><td>Lack_Interest</td><td>535</td><td>134</td><td>268</td><td>267</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>6-11</td><td>Financial</td><td>195</td><td>49</td><td>98</td><td>97</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>12-15</td><td>Financial</td><td>365</td><td>91</td><td>183</td><td>182</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>16-18</td><td>Financial</td><td>455</td><td>114</td><td>228</td><td>227</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>19-24</td><td>Financial</td><td>285</td><td>71</td><td>143</td><td>142</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>6-11</td><td>Financial</td><td>180</td><td>45</td><td>90</td><td>90</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>12-15</td><td>Financial</td><td>335</td><td>84</td><td>168</td><td>167</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>16-18</td><td>Financial</td><td>420</td><td>105</td><td>210</td><td>210</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>6-11</td><td>Financial</td><td>340</td><td>85</td><td>170</td><td>170</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>12-15</td><td>Financial</td><td>635</td><td>159</td><td>318</td><td>317</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>16-18</td><td>Financial</td><td>795</td><td>199</td><td>398</td><td>397</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>6-11</td><td>Financial</td><td>305</td><td>76</td><td>153</td><td>152</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>12-15</td><td>Financial</td><td>570</td><td>143</td><td>285</td><td>285</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>16-18</td><td>Financial</td><td>715</td><td>179</td><td>358</td><td>357</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
