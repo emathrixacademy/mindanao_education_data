@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Infrastructure Data</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
+        .nav { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        .nav a { color: #667eea; text-decoration: none; padding: 8px 15px; margin-right: 10px; border: 2px solid #667eea; border-radius: 5px; }
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th { background: #667eea; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 School Infrastructure Data</h1>
+        <p>Mindanao Education Data Portal</p>
+    </div>
+    
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="enrollment.html">Enrollment</a>
+        <a href="graduates.html">Graduates</a>
+        <a href="osy.html">OSY</a>
+        <a href="poverty.html">Poverty</a>
+        <a href="infrastructure.html">Infrastructure</a>
+        <a href="incidents.html">Incidents</a>
+        <a href="performance.html">Performance</a>
+    </div>
+    
+    <div id="infrastructure_data_table">
+        <table>
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Year</th>
+                    <th>School_ID</th>
+                    <th>School_Type</th>
+                    <th>Student_Population</th>
+                    <th>Classrooms</th>
+                    <th>Has_Computer_Lab</th>
+                    <th>Has_Internet</th>
+                    <th>Teacher_Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>General Santos</td><td>2015</td><td>GEN-001</td><td>Public</td><td>850</td><td>21</td><td>1</td><td>0</td><td>28</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>GEN-002</td><td>Public</td><td>920</td><td>23</td><td>1</td><td>1</td><td>31</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>GEN-003</td><td>Public</td><td>780</td><td>20</td><td>1</td><td>0</td><td>26</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>GEN-004</td><td>Private</td><td>450</td><td>11</td><td>1</td><td>1</td><td>15</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>GEN-005</td><td>Private</td><td>380</td><td>10</td><td>1</td><td>1</td><td>13</td></tr>
+                <tr><td>General Santos</td><td>2020</td><td>GEN-001</td><td>Public</td><td>850</td><td>21</td><td>1</td><td>1</td><td>28</td></tr>
+                <tr><td>General Santos</td><td>2020</td><td>GEN-002</td><td>Public</td><td>920</td><td>23</td><td>1</td><td>1</td><td>31</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>TAC-001</td><td>Public</td><td>680</td><td>17</td><td>0</td><td>0</td><td>23</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>TAC-002</td><td>Public</td><td>720</td><td>18</td><td>1</td><td>0</td><td>24</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>TAC-003</td><td>Private</td><td>320</td><td>8</td><td>1</td><td>1</td><td>11</td></tr>
+                <tr><td>Tacurong</td><td>2020</td><td>TAC-001</td><td>Public</td><td>680</td><td>17</td><td>1</td><td>1</td><td>23</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>ISU-001</td><td>Public</td><td>620</td><td>16</td><td>0</td><td>0</td><td>21</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>ISU-002</td><td>Public</td><td>650</td><td>16</td><td>1</td><td>0</td><td>22</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>ISU-003</td><td>Private</td><td>280</td><td>7</td><td>1</td><td>1</td><td>9</td></tr>
+                <tr><td>Isulan</td><td>2020</td><td>ISU-001</td><td>Public</td><td>620</td><td>16</td><td>1</td><td>1</td><td>21</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>KOR-001</td><td>Public</td><td>750</td><td>19</td><td>1</td><td>0</td><td>25</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>KOR-002</td><td>Public</td><td>800</td><td>20</td><td>1</td><td>1</td><td>27</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>KOR-003</td><td>Private</td><td>380</td><td>10</td><td>1</td><td>1</td><td>13</td></tr>
+                <tr><td>Koronadal</td><td>2020</td><td>KOR-001</td><td>Public</td><td>750</td><td>19</td><td>1</td><td>1</td><td>25</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>KID-001</td><td>Public</td><td>700</td><td>18</td><td>1</td><td>0</td><td>23</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>KID-002</td><td>Public</td><td>740</td><td>19</td><td>1</td><td>1</td><td>25</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>KID-003</td><td>Private</td><td>350</td><td>9</td><td>1</td><td>1</td><td>12</td></tr>
+                <tr><td>Kidapawan</td><td>2020</td><td>KID-001</td><td>Public</td><td>700</td><td>18</td><td>1</td><td>1</td><td>23</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
