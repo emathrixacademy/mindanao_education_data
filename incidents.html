@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Incidents Data</title>
+    <style>
+        body { font-family: Arial; margin: 20px; background: #f5f5f5; }
+        .header { background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 30px; text-align: center; border-radius: 10px; margin-bottom: 20px; }
+        .nav { background: white; padding: 15px; margin-bottom: 20px; border-radius: 8px; }
+        .nav a { color: #667eea; text-decoration: none; padding: 8px 15px; margin-right: 10px; border: 2px solid #667eea; border-radius: 5px; }
+        table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        th { background: #667eea; color: white; padding: 12px; text-align: left; }
+        td { padding: 10px; border-bottom: 1px solid #ddd; }
+        tr:hover { background: #f5f5f5; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📊 School Incidents Data</h1>
+        <p>Mindanao Education Data Portal</p>
+    </div>
+    
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="enrollment.html">Enrollment</a>
+        <a href="graduates.html">Graduates</a>
+        <a href="osy.html">OSY</a>
+        <a href="poverty.html">Poverty</a>
+        <a href="infrastructure.html">Infrastructure</a>
+        <a href="incidents.html">Incidents</a>
+        <a href="performance.html">Performance</a>
+    </div>
+    
+    <div id="incidents_data_table">
+        <table>
+            <thead>
+                <tr>
+                    <th>City</th>
+                    <th>Year</th>
+                    <th>Month</th>
+                    <th>Incident_Type</th>
+                    <th>Incident_Count</th>
+                    <th>Resolved</th>
+                    <th>Pending</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>General Santos</td><td>2015</td><td>1</td><td>Bullying</td><td>28</td><td>24</td><td>4</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>1</td><td>Fighting</td><td>18</td><td>16</td><td>2</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>1</td><td>Truancy</td><td>42</td><td>35</td><td>7</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>2</td><td>Bullying</td><td>25</td><td>21</td><td>4</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>2</td><td>Fighting</td><td>15</td><td>13</td><td>2</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>2</td><td>Truancy</td><td>38</td><td>32</td><td>6</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>9</td><td>Bullying</td><td>32</td><td>28</td><td>4</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>9</td><td>Fighting</td><td>22</td><td>19</td><td>3</td></tr>
+                <tr><td>General Santos</td><td>2015</td><td>9</td><td>Truancy</td><td>48</td><td>40</td><td>8</td></tr>
+                <tr><td>General Santos</td><td>2020</td><td>1</td><td>Bullying</td><td>14</td><td>12</td><td>2</td></tr>
+                <tr><td>General Santos</td><td>2020</td><td>1</td><td>Fighting</td><td>9</td><td>8</td><td>1</td></tr>
+                <tr><td>General Santos</td><td>2020</td><td>1</td><td>Truancy</td><td>21</td><td>18</td><td>3</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>1</td><td>Bullying</td><td>12</td><td>10</td><td>2</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>1</td><td>Fighting</td><td>8</td><td>7</td><td>1</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>1</td><td>Truancy</td><td>18</td><td>15</td><td>3</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>9</td><td>Bullying</td><td>14</td><td>12</td><td>2</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>9</td><td>Fighting</td><td>10</td><td>9</td><td>1</td></tr>
+                <tr><td>Tacurong</td><td>2015</td><td>9</td><td>Truancy</td><td>22</td><td>18</td><td>4</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>1</td><td>Bullying</td><td>10</td><td>9</td><td>1</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>1</td><td>Fighting</td><td>7</td><td>6</td><td>1</td></tr>
+                <tr><td>Isulan</td><td>2015</td><td>1</td><td>Truancy</td><td>16</td><td>13</td><td>3</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>1</td><td>Bullying</td><td>18</td><td>15</td><td>3</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>1</td><td>Fighting</td><td>12</td><td>10</td><td>2</td></tr>
+                <tr><td>Koronadal</td><td>2015</td><td>1</td><td>Truancy</td><td>28</td><td>24</td><td>4</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>1</td><td>Bullying</td><td>16</td><td>14</td><td>2</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>1</td><td>Fighting</td><td>11</td><td>9</td><td>2</td></tr>
+                <tr><td>Kidapawan</td><td>2015</td><td>1</td><td>Truancy</td><td>25</td><td>21</td><td>4</td></tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
